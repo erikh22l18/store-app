@@ -47,5 +47,5 @@ jobs:
     # 7. Sincronizar con el servidor
     - name: Deploy to server
       run: |
-        ssh-keyscan -H 172.18.79.133 >> ~/.ssh/known_hosts
+        ssh-keyscan -H 190.238.211.232 >> ~/.ssh/known_hosts
         rsync -avz ./dist/ erikh@172.18.79.133:/home/erikh/projects/store-app-container/store-app/
