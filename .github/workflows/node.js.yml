@@ -37,3 +37,14 @@ jobs:
         git --work-tree dist add --all
         git --work-tree dist commit -m "Deploy to dist branch"
         git push origin HEAD:dist --force
+
+    # 6. Sincronizar con el servidor
+    - name: Deploy to server
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 172.18.79.133 >> ~/.ssh/known_hosts
+        rsync -avz ./dist/ erikh@172.18.79.133:/home/erikh/projects/store-app-container/store-app/
